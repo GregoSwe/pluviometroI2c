@@ -1,7 +1,8 @@
 pluviometroI2c
 ==============
 
-Librerie per la gestione di un PluviometroI2C con scheda Arduino, connessa ad una memoria EEPROM 24LC256 e una TinyRTC
+Librerie per la gestione di un PluviometroI2C con scheda Arduino, connessa ad una memoria EEPROM 24LC256 e una TinyRTC.
+Documentazione : https://github.com/GregoSwe/pluviometroI2c/wiki
 
 *****************************************************************
 Componenti richieste :
