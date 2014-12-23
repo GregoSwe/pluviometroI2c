@@ -10,10 +10,12 @@ class MasterComunicationHandlerClass
 {
 private:
 
+    //ATTRIBUTI
     byte requestType;
     AbstractAction* action;
     unsigned int buffer;
     unsigned int MAXRAM;
+    //FUNZIONI
     void sendBytes(byte* _bytes,int _howMany);
     void sendInteger(int _integer);
 public:

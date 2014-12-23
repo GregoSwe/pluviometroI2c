@@ -1,6 +1,6 @@
 #include "JSonConverter.h"
 
-String JsonConverter::addValue(String _name, const String & _value)
+String JsonConverter::addValue(String _name, String _value)
 {
   return String ( String("\"")+_name+String("\": \"")+_value+String("\""));
 }
@@ -71,13 +71,13 @@ int JsonConverter::get_info(byte *_byteArray, int _type)
 void JsonConverter::decompress(byte * _compressedByte, int * _integerArray)
 {
 
-  _integerArray[0] = get_info(_compressedByte, DAY);
-  _integerArray[1] = get_info(_compressedByte, MONTH);
-  _integerArray[2] = get_info(_compressedByte, YEAR);
-  _integerArray[3] = get_info(_compressedByte, HOUR);
-  _integerArray[4] = get_info(_compressedByte, MINUTE);
-  _integerArray[5] = get_info(_compressedByte, SECOND);
-  _integerArray[6] = get_info(_compressedByte, COUNTER);
+  _integerArray[0] = get_info(_compressedByte, 0);
+  _integerArray[1] = get_info(_compressedByte, 1);
+  _integerArray[2] = get_info(_compressedByte, 2);
+  _integerArray[3] = get_info(_compressedByte, 3);
+  _integerArray[4] = get_info(_compressedByte, 4);
+  _integerArray[5] = get_info(_compressedByte, 5);
+  _integerArray[6] = get_info(_compressedByte, 6);
 }
 
 String JsonConverter::convertToJson(byte *_compressedByte, int _howMany)
@@ -89,25 +89,25 @@ String JsonConverter::convertToJson(byte *_compressedByte, int _howMany)
         decompress((_compressedByte+i*6),(decompressInformation+i*7));
     delete [] _compressedByte;
 
-    String JsonString = "";
+    String jsonString = "";
     for(int i = 0; i<integerNumb/7;i++) // per ogni settupla di valori decompressi aggiungo alla stringa gli interi trasformati in Json
     {
       jsonString += "{";
-      jsonString += addFild("day",String(d[i*7]));
+      jsonString += addValue("day",String(decompressInformation[i*7]));
       jsonString += ",";
-      jsonString += addFild("month",String(d[i*7+1]));
+      jsonString += addValue("month",String(decompressInformation[i*7+1]));
       jsonString += ",";
-      jsonString += addFild("year",String(2000+d[i*7+2]));
+      jsonString += addValue("year",String(2000+decompressInformation[i*7+2]));
       jsonString += ",";
-      jsonString += addFild("hour",String(d[i*7+3]));
+      jsonString += addValue("hour",String(decompressInformation[i*7+3]));
       jsonString += ",";
-      jsonString += addFild("minute",String(d[i*7+4]));
+      jsonString += addValue("minute",String(decompressInformation[i*7+4]));
       jsonString += ",";
-      jsonString += addFild("second",String(d[i*7+5]));
+      jsonString += addValue("second",String(decompressInformation[i*7+5]));
       jsonString += ",";
-      jsonString += addFild("count",String(d[i*7+6]));
+      jsonString += addValue("count",String(decompressInformation[i*7+6]));
       jsonString+= "}";
     }
     delete [] decompressInformation;
-    return JsonString;
+    return jsonString;
 }
