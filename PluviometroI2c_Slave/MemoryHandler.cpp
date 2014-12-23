@@ -5,7 +5,8 @@ MemoryHandlerClass::MemoryHandlerClass() :
     MEMORYADD(0x50),RTCADD(0x68),MAXMEMORY(32768),
     currentPosition(0),
     timestampCount(0),
-    lastTimestampPosition(0)
+    lastTimestampPosition(0),
+    interrupted(false)
 {
     MAXSTACK = MAXMEMORY/6;
     setCounters();
