@@ -143,7 +143,10 @@ int MemoryHandlerClass::incrementCounters()
     int index = currentPosition;
 
     //incremento e salvo currentPosition
-    updateCounter(currentPosition,currentPosition+1,CURRENT_POSITION);
+    if(currentPosition+1==MAXSTACK)
+        updateCounter(currentPosition,0,CURRENT_POSITION);
+    else
+        updateCounter(currentPosition,currentPosition+1,CURRENT_POSITION);
     currentPosition++;
     // incremento e salvo timestampCount
     updateCounter(timestampCount,timestampCount+1,TIMESTAMP_COUNTER);
@@ -322,13 +325,13 @@ byte *MemoryHandlerClass::getNewTimestamp(bool _letUnread = false)
 {
 
 
-        /*
+    /*
          *  Eseguo il for a partire da "lastTimestampPosition" per timestampCount*6, poichè per ogni timestamp ci sono 6 byte da leggere e salvare
          *  i per scorrere la memoria, j per scorrere l'array
          *  j[0,timestampCount*6-1] ; i[lastTimestampPosition,lastTimestampPosition + timestampCount*6 -1]
          */
 
-   /* for(int i = lastTimestampPosition,j=0; i< lastTimestampPosition + timestampCount*6; i++,j++ )
+    /* for(int i = lastTimestampPosition,j=0; i< lastTimestampPosition + timestampCount*6; i++,j++ )
         byteToReturn[j] = readEEPROM(i);*/
 
     byte * byteToReturn = getMemory(lastTimestampPosition*6,currentPosition*6);
@@ -445,16 +448,35 @@ byte *MemoryHandlerClass::getMemoryUsed(int _from, int _howMany)
 
 byte *MemoryHandlerClass::getMemory(int _from, int _to)
 {
-    byte* byteToReturn = new byte[_to - _from];
-    if(_from>_to)
+    byte* byteToReturn = 0;
+
+    if(_from > MAXMEMORY-2) // Se è richiesto un indirizzo in memoria maggiore del massimo indirizzo disponibile ritorno 0
         return 0;
-
-
-    for(int i = _from , j = 0; i < _from + _to;i++,j++)
+    if(_from > _to) // Se _from è maggiore di _to significa che abbiamo esaurito la memoria esterna e abbiamo ricominciato a salvare i timestamp dall'inizio
     {
-        byteToReturn[j] = readEEPROM(i);
-    }
+        byte * firstPart = getMemory(_from,MAXMEMORY-2); //  prendo la prima parte che va da _from  MAXMEMORY - 2 (-2 perchè dei 2^15 byte ne usiamo 2^15-2 per i timestamp)
+        byte * secondPart = getMemory(0,_to); // prendo la seconda parte che vada da 0 a _to
 
+        byteToReturn = new byte[((MAXMEMORY-2)-_from)+_to];
+        int index = 0;
+        for(;i <(MAXMEMORY-2)-_from;index++)
+            byteToReturn[index] = firstPart[index]; //ricopio gli elementi salvati nella prima parte nell'array di byte
+        delete [] firstPart;
+        for(int j = 0; j < _to; j++,index++) // ricopio gli elementi salvati nella seconda parte nell'array di byte
+            byteToReturn[index] = secondPart[j];
+        delete [] secondPart;
+
+    }
+    else  // altrimenti prelevo i byte che mi servono da _from a _to
+    {
+        byteToReturn = new byte[_to - _from];
+
+
+        for(int i = _from , j = 0; i < _from + _to;i++,j++)
+        {
+            byteToReturn[j] = readEEPROM(i);
+        }
+    }
     return byteToReturn;
 }
 
