@@ -19,7 +19,8 @@ void setup()
 {
   Wire.begin(2);                                 
   Wire.onReceive(request_decider);                              
-  Wire.onRequest(request_handler);                           
+  Wire.onRequest(request_handler);         
+  pinMode(2,INPUT_PULLUP);                  
   attachInterrupt(0,process_interrupt,FALLING);  
   Serial.begin(9600);
   Serial.println("ready");
@@ -31,8 +32,10 @@ void loop()
 
   if(rebounce == true)
   {
+    detachInterrupt(0);
     delay(400);
     rebounce = false;
+    attachInterrupt(0,process_interrupt,FALLING); 
   }
   // 
   debug();
