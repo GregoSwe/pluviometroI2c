@@ -47,22 +47,23 @@ void SlaveComunicationHandler::prepareSlaveRequest(byte _slaveAddress, byte _req
     delay(20);
 }
 
+// Funzione generica che richiede dei byte allo slave secondo uno specifico protocollo
 byte *SlaveComunicationHandler::requireBytes(byte _slaveAddress, byte _requestType, int _howManyBytes)
 {
 
-    byte* byteToReturn = new byte[_howManyBytes];
+    byte* byteToReturn = new byte[_howManyBytes]; // inizializzo un array di byte a seconda di quanti ne ho richiesti
     int index = 0;
 
-    prepareSlaveRequest(_slaveAddress,_requestType);
+    prepareSlaveRequest(_slaveAddress,_requestType); // avviso lo slave della richiesta che ho intenzione di richiedere
 
-    delay(100 + _howManyBytes);
+    delay(100 + _howManyBytes); // attendo che lo slave si prepari e raccolga le informazioni che ho richiesto
 
-    while(_howManyBytes > BYTERATE)
+    while(_howManyBytes > BYTERATE)  // finchè i byte che devo richiedere sono superiori ma massimo rate che il bus può sopportare
     {
-        Wire.requestFrom((int)_slaveAddress,(int)BYTERATE);
-        _howManyBytes = _howManyBytes - BYTERATE;
+        Wire.requestFrom((int)_slaveAddress,(int)BYTERATE); // richiedo i byte
+        _howManyBytes = _howManyBytes - BYTERATE;  // ho richiesto i byte, quindi la prossima iterazione avrò BYTERATE byte in meno da richiedere
 
-        while(Wire.available())
+        while(Wire.available()) // recupero le informazioni e le salvo nell'array, il cui indice verrà incrementato di volta in volta
         {
             byte resoult = Wire.read();
             byteToReturn[index] = resoult;
@@ -71,10 +72,10 @@ byte *SlaveComunicationHandler::requireBytes(byte _slaveAddress, byte _requestTy
         delay(10);
     }
 
-    if(_howManyBytes > 0)
+    if(_howManyBytes > 0) // quando arrivo qui i byte restanti da chiedere sono minori del rate massimo che il bus può sopportare, quindi procedo con la richiesta
     {
-        Wire.requestFrom((int)_slaveAddress,_howManyBytes);
-        while(Wire.available())
+        Wire.requestFrom((int)_slaveAddress,_howManyBytes); // informo lo slave
+        while(Wire.available())  // recupero i dati
         {
             byte resoult = Wire.read();
             byteToReturn[index] = resoult;
