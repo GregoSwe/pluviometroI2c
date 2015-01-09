@@ -1,6 +1,6 @@
 #ifndef CONVERTER_h
 #define CONVERTER_h
-
+#include<Arduino.h>
 class Converter
 {
 protected:

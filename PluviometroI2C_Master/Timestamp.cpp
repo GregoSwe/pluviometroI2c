@@ -7,6 +7,14 @@ Timestamp::Timestamp(byte _d, byte _m, int _y, byte _h, byte _mm, byte _s, int _
 {
 
 }
+
+Timestamp::Timestamp():
+_day(0),_month(0),_year(0),
+_hour(0),_minute(0),_second(0),
+_counter(0)
+{
+
+}
 byte Timestamp::day()
 {
     return _day;

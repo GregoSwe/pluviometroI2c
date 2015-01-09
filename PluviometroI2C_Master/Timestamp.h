@@ -15,6 +15,7 @@ private:
     int _counter;
 public:
     Timestamp(byte _d,byte _m,int _y,byte _h,byte _mm,byte _s,int _c);
+    Timestamp();
      byte day();
      byte month();
      int year();

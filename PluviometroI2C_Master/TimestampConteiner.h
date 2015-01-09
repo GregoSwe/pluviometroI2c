@@ -7,7 +7,7 @@
 class TimestampContainer : public Converter
 {
 private:
-    Timestamp* array; // array di timestamp
+    Timestamp* timestampArray; // array di timestamp
     int sizeOf;       // identifica il numero di timestamp che sono contenuti nel container
 
 public:
@@ -15,7 +15,7 @@ public:
     Timestamp value(int i);
     Timestamp &get(int i);
     int size();
-   ~TimestampCounter();
+   ~TimestampContainer();
 };
 
 #endif
