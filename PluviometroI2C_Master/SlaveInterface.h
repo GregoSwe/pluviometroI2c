@@ -11,7 +11,7 @@ private:
     SlaveComunicationHandler SCH;
     byte slaveAddress;
 public:
-    const TimestampContainer & requireTimestamp() const;
+    TimestampContainer requireTimestamp();
     SlaveInterfaceClass(byte _add);
     void setSlaveAddress(int _newAddress);
 };

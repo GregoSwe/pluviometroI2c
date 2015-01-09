@@ -1,5 +1,5 @@
 #ifndef SLAVECOMUNICATIONHANDLER_h
-#define SLAVECOMUNICANTIONHANDLER_h
+#define SLAVECOMUNICATIONHANDLER_h
 #include <Arduino.h>
 #include <Wire.h>
 
