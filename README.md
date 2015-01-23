@@ -17,4 +17,4 @@ Come installare:
 
 Estrarre i contenuto del file .zip e inserire le cartelle PluviometroI2C\_Slave e PluviometroI2C\_Master all'interno della cartella ~/sketchbook/libraries. Dopodichè inserire la cartella PluviometroI2C\_Slave\_Sketch in ~/sketchbook, aprire il proprio IDE Arudino (1.0.6 o 1.0.5 compatibili) e caricare nella scheda che si desidera utilizzare per monitorare il pluviometro lo sketch.
 
-Usare invece la libreria libreria PluviometroI2C\_Master nella propria scheda Master per comunicare tramite I2C con la scheda Slave.
+Usare invece l'oggetto SlaveInterface, della libreria libreria PluviometroI2C\_Master, nella propria scheda Master per comunicare tramite I2C con la scheda Slave.
