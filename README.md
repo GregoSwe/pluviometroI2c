@@ -23,18 +23,21 @@ Usare invece l'oggetto SlaveInterface, della libreria libreria PluviometroI2C\_M
 
 Esempio utilizzo libreria Master:
 
-    TimestampContainer container = SlaveInterface.requireTimestamp() // recupero i nuovi timestamp dallo Slave
-    for(int i = 0; i < container.size(); i++) // scorro tutti i Timestamp contenuti dentro il container
+        if(SlaveInterface.newTimestamp() > 0) // verifico che ci siano nuovi timestamp da richiedere
     {
-       Timestamp tmstmp = container.value(i); // recupero il Timestamp i-esimo dal container
-       Serial.println(tmstmp.day());   // stampo il giorno del mese
-       Serial.println(tmstmp.month()); // stampo il mese dell'anno
-       Serial.println(tmstmp.year());  // stampo l'anno
-       Serial.println(tmstmp.hour());  // stampo l'ora del giorno
-       Serial.println(tmstmp.minute());// stampo i minuti dell'ora
-       Serial.println(tmstmp.second());// stampo i secondi del minuto
-       Serial.println(tmstmp.counter());// stampo il contatore del Timestamp
-       Serial.print(***);
-     }
+        TimestampContainer container = SlaveInterface.requireTimestamp() // recupero i nuovi timestamp dallo Slave
+        for(int i = 0; i < container.size(); i++) // scorro tutti i Timestamp contenuti dentro il container
+        {
+           Timestamp tmstmp = container.value(i); // recupero il Timestamp i-esimo dal container
+           Serial.println(tmstmp.day());   // stampo il giorno del mese
+           Serial.println(tmstmp.month()); // stampo il mese dell'anno
+           Serial.println(tmstmp.year());  // stampo l'anno
+           Serial.println(tmstmp.hour());  // stampo l'ora del giorno
+           Serial.println(tmstmp.minute());// stampo i minuti dell'ora
+           Serial.println(tmstmp.second());// stampo i secondi del minuto
+           Serial.println(tmstmp.counter());// stampo il contatore del Timestamp
+           Serial.print(***);
+         }
      
-     container.clear(); // rilascio la memoria occupata dal TimestampContainer
+         container.clear(); // rilascio la memoria occupata dal TimestampContainer
+    }
