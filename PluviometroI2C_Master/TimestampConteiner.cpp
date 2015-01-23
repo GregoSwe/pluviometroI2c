@@ -49,12 +49,13 @@ Timestamp &TimestampContainer::get(int i) // ritorna il riferimento dell'oggetto
     return *(timestampArray +i);
 }
 
+void TimestampContainer::clear()
+{
+    delete [] timestampArray;
+}
+
 int TimestampContainer::size()
 {
     return sizeOf;
 }
 
-TimestampContainer::~TimestampContainer()
-{
-    delete [] timestampArray;
-}

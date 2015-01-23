@@ -39,8 +39,9 @@ public:
     TimestampContainer(byte * _rawByte, int _size);
     Timestamp value(int i);
     Timestamp &get(int i);
+    void clear();
     int size();
-   ~TimestampContainer();
+
 };
 
 #endif
