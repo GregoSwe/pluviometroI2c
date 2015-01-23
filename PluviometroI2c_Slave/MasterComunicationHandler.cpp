@@ -26,7 +26,7 @@
 #include"MasterComunicationHandler.h"
 
 MasterComunicationHandlerClass::MasterComunicationHandlerClass()
-    :action(0),requestType(255),buffer(0),MAXRAM(1200)
+    :action(0),requestType(255),buffer(0),MAXRAM(900)
 {
 }
 
