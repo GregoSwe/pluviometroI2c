@@ -27,7 +27,7 @@
  *
  * @Updates:
  *
- * @26/GEN/2015 v1.0.1
+ * @26/GEN/2015 v1.0.1 -> Gregorini Marco
  *  Modificato il delay di tolleranza fra una basculata e l'altra per evitare rimbalzi: da 400 a 500 ms
  */
 
