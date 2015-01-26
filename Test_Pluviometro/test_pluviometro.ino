@@ -3,6 +3,7 @@
 * Questo codice viene utilizzato per testare la capacità del pluviometro di calcolare correttamente il passaggio di mezzo litro d'acqua in un minuto (equivalente di 300ml di pioggia in un'ora
 * 
 */
+
 int i = 0;
 volatile bool vai = false;
 volatile  double startTime = 0;
@@ -30,10 +31,18 @@ void loop()
     }
     detachInterrupt(0);
     x[i] = millis()-startTime;
-    i++;
+    
     delay(500);
     Serial.print("i : ");
-    Serial.println(i);
+    Serial.print(i);
+    Serial.print(" intervallo -> ");
+    Serial.print((x[i]-x[i-1])/1000);
+    Serial.print(" - time -> ");
+    if(i==0)
+      Serial.println(0);
+      else
+      Serial.println(x[i]/1000);
+     i++; 
     attachInterrupt(0,interr,FALLING);
     vai = false;
   }
@@ -58,7 +67,7 @@ void resoults() // stampa i risultati ottenuti
 
    double media = 0;
 
-  for(int i = 0; i <26; i++)
+  for(int i = 0; i <27; i++)
   {
      double valore = x[i+1] - x[i];
     if(valore >maggiorIntervallo)  // calcolo il maggior tempo di basculata e quando è avvenuto
@@ -73,8 +82,9 @@ void resoults() // stampa i risultati ottenuti
     }
     media +=valore;
   }
-  media = media / 27;
+  media = media / 28;
   
+  Serial.println("*****");
   Serial.print(" maggior tempo di basculata = ");Serial.print(maggiorIntervallo/1000);Serial.print("s - avvenuto dopo la basculata #");Serial.println(maggiorT);
 
   Serial.print(" minor tempo di basculata = ");Serial.print(minorIntervallo/1000);Serial.print("s - avvenuto dopo la basculata #");Serial.println(minorT);
