@@ -4,6 +4,7 @@
 * 
 */
 
+
 int i = 0;
 volatile bool vai = false;
 volatile  double startTime = 0;
@@ -55,6 +56,9 @@ void loop()
 
 void resoults() // stampa i risultati ottenuti
 {
+  
+  Serial.println("****");
+
    double totalTime = (millis() - startTime)/1000;
   Serial.print(" tempo totale di esecuzione = ");
   Serial.println( totalTime );
@@ -83,8 +87,7 @@ void resoults() // stampa i risultati ottenuti
     media +=valore;
   }
   media = media / 28;
-  
-  Serial.println("*****");
+    
   Serial.print(" maggior tempo di basculata = ");Serial.print(maggiorIntervallo/1000);Serial.print("s - avvenuto dopo la basculata #");Serial.println(maggiorT);
 
   Serial.print(" minor tempo di basculata = ");Serial.print(minorIntervallo/1000);Serial.print("s - avvenuto dopo la basculata #");Serial.println(minorT);
@@ -99,6 +102,7 @@ void interr()
     vai = true;
   }
 }
+
 
 
 
